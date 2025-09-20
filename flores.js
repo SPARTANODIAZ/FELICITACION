@@ -33,7 +33,7 @@ class Flor {
             ctx.fill();
         }
 
-        // Dibujar el centro (tu adición, que es muy buena)
+        // Dibujar el centro
         ctx.fillStyle = '#ff9900';
         ctx.beginPath();
         ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
@@ -43,11 +43,9 @@ class Flor {
     }
 
     update() {
-        // Mover la flor hacia abajo
         this.y += this.speedY;
         this.angle += this.speedAngle;
         
-        // Si la flor sale de la pantalla, la reseteamos arriba
         if (this.y > canvas.height) {
             this.x = Math.random() * canvas.width;
             this.y = -this.size;
@@ -71,32 +69,21 @@ const musicaFondo = document.getElementById('musicaFondo');
 const subtitulosDiv = document.getElementById('subtitulos');
 const recuadroFotos = document.getElementById('recuadroFotos');
 
-// Lista de tus fotos (asegúrate de que los nombres de archivo sean EXACTOS)
 const fotos = ["ELENA1.jpg", "ELENA2.jpg", "ELENA3.jpg", "ELENA4.jpg", "ELENA5.jpg", "ELENA6.jpg", "ELENA7.jpg"];
 let indiceFotoActual = 0;
 
 function cambiarFoto() {
-    // 1. Eliminar cualquier foto existente para evitar acumulación
     recuadroFotos.innerHTML = '';
-
-    // 2. Crear un nuevo elemento de imagen
     const nuevaFoto = document.createElement('img');
     nuevaFoto.src = fotos[indiceFotoActual];
     nuevaFoto.alt = "Foto de nosotros";
-
-    // 3. Agregar la nueva foto al recuadro
     recuadroFotos.appendChild(nuevaFoto);
-
-    // 4. Activar la nueva foto para la transición (con un pequeño retraso para que funcione)
     setTimeout(() => {
         nuevaFoto.classList.add('activa');
     }, 100);
-
-    // 5. Moverse a la siguiente foto
     indiceFotoActual = (indiceFotoActual + 1) % fotos.length;
 }
 
-// Subtítulos sincronizados
 const lineasCancion = [
     { texto: "Me haces tan feliz...", tiempo: 0 },
     { texto: "Cada día contigo es una aventura.", tiempo: 5 },
@@ -104,7 +91,7 @@ const lineasCancion = [
     { texto: "Y siempre estaré aquí para ti.", tiempo: 15 },
     { texto: "¡Te amo!", tiempo: 20 },
     { texto: "Te amo, mucho incluso en los momentos que llegamos a pelear y nuestro árbol se tambalea pero quiero simplemente mostrarte que no eres espectadora y que este chico te ama.", tiempo: 25 },
-    { texto: "", tiempo: 35 } // Final de los subtítulos
+    { texto: "", tiempo: 35 }
 ];
 let indiceLinea = 0;
 
@@ -120,29 +107,21 @@ function mostrarSubtitulo() {
     }
 }
 
-// Función principal para reproducir la música y empezar la magia
 function reproducirMusica() {
-    // Ocultar el botón
     const boton = document.querySelector('.boton-musica');
     boton.style.display = 'none';
 
-    // Hacer visible el recuadro de las fotos
     recuadroFotos.style.display = 'block';
 
-    // Iniciar el efecto de las flores
     for (let i = 0; i < 100; i++) {
         flores.push(new Flor());
     }
     animate();
 
-    // Empezar a mostrar la primera foto
     cambiarFoto();
-    // Y cambiarla cada 5 segundos
     setInterval(cambiarFoto, 5000);
 
-    // Iniciar la música
     musicaFondo.play();
     
-    // Iniciar los subtítulos
     mostrarSubtitulo();
 }
