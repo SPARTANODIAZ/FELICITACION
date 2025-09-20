@@ -1,144 +1,157 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flores Amarillas</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            background: linear-gradient(45deg, #f7e1b5, #d9b891, #a98d6c); /* Gradiente inicial */
-            background-size: 400% 400%;
-            animation: backgroundShift 20s ease infinite; /* Animación del fondo */
-        }
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-        .contenedor-principal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
-        }
-        .mensaje-fijo {
-            font-family: 'Playfair Display', serif; /* Nueva fuente elegante */
-            font-size: 3em;
-            color: #5d4037;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        .poema {
-            font-family: 'Merriweather', serif;
-            font-size: 1.2em;
-            color: #5d4037;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-        .subtitulos {
-            font-family: 'Merriweather', serif; /* Nueva fuente para los subtítulos */
-            font-size: 1.5em;
-            color: #5d4037;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
-            margin-top: 10px;
-            min-height: 2em;
-        }
-        .boton-musica {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
-            font-family: 'Merriweather', serif;
-            background-color: #f0c242;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease;
-        }
-        .boton-musica:hover {
-            background-color: #ffeb3b;
-        }
-        .recuadro-fotos {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw; /* 80% del ancho de la ventana */
-            height: 80vh; /* 80% de la altura de la ventana */
-            max-width: 600px; /* Tamaño máximo para que no sea muy grande */
-            max-height: 600px;
-            background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente */
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            overflow: hidden; /* Oculta partes de la imagen que se desborden */
-            display: none; /* Inicia oculto */
-            z-index: 9; /* Detrás del texto principal pero encima del fondo */
-        }
-        .recuadro-fotos img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Ajusta la imagen dentro del recuadro, mostrando toda la imagen */
-            position: absolute;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-        .recuadro-fotos img.activa {
-            opacity: 1;
-        }
-        
-        /* Animación para el cambio de color de fondo */
-        @keyframes backgroundShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores Amarillas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(45deg, #f7e1b5, #d9b891, #a98d6c); /* Gradiente inicial */
+            background-size: 400% 400%;
+            animation: backgroundShift 20s ease infinite; /* Animación del fondo */
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .contenedor-principal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        .mensaje-fijo {
+            font-family: 'Playfair Display', serif; /* Nueva fuente elegante */
+            font-size: 3em;
+            color: #5d4037;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .poema {
+            font-family: 'Merriweather', serif;
+            font-size: 1.2em;
+            color: #5d4037;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .poema-brillo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #f0c242;
+            text-shadow: 0 0 10px #f0c242, 0 0 20px #f0c242, 0 0 30px #f0c242;
+            line-height: 1.6;
+            animation: brilloIntermitente 3s infinite alternate;
+        }
+        @keyframes brilloIntermitente {
+            from { text-shadow: 0 0 10px #f0c242, 0 0 20px #f0c242, 0 0 30px #f0c242; }
+            to { text-shadow: 0 0 15px #f0c242, 0 0 25px #f0c242, 0 0 40px #f0c242; }
+        }
+        .subtitulos {
+            font-family: 'Merriweather', serif;
+            font-size: 1.5em;
+            color: #5d4037;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+            margin-top: 10px;
+            min-height: 2em;
+        }
+        .boton-musica {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-family: 'Merriweather', serif;
+            background-color: #f0c242;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+        .boton-musica:hover {
+            background-color: #ffeb3b;
+        }
+        .recuadro-fotos {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw; /* 80% del ancho de la ventana */
+            height: 80vh; /* 80% de la altura de la ventana */
+            max-width: 600px; /* Tamaño máximo para que no sea muy grande */
+            max-height: 600px;
+            background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente */
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            overflow: hidden; /* Oculta partes de la imagen que se desborden */
+            display: none; /* Inicia oculto */
+            z-index: 9; /* Detrás del texto principal pero encima del fondo */
+        }
+        .recuadro-fotos img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ajusta la imagen dentro del recuadro, mostrando toda la imagen */
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .recuadro-fotos img.activa {
+            opacity: 1;
+        }
+        
+        /* Animación para el cambio de color de fondo */
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
 </head>
 <body>
-    <canvas id="floresCanvas"></canvas>
+    <canvas id="floresCanvas"></canvas>
 
-    <div class="recuadro-fotos" id="recuadroFotos">
-    </div>
+    <div class="recuadro-fotos" id="recuadroFotos">
+    </div>
 
-    <div class="contenedor-principal">
-        <div class="mensaje-fijo">
-            ¡Felicidades, Amor!
-            <br>
-            <small style="font-size: 0.5em;">Esto es para ti.</small>
-        </div>
+    <div class="contenedor-principal">
+        <div class="mensaje-fijo">
+            ¡Felicidades, Amor!
+            <br>
+            <small style="font-size: 0.5em;">Esto es para ti.</small>
+        </div>
+        
+        <p class="poema poema-brillo">
+            Entre la distancia que separa los soles,<br>
+            y el eco del tiempo en mis rincones,<br>
+            nuestro amor es un puente de luz,<br>
+            que a pesar de los kilómetros, nos une, mi amor.<br>
+            <br>
+            Las flores amarillas florecen por ti,<br>
+            cada pétalo un paso más cerca de mí,<br>
+            porque nuestro amor fue tan grande y real,<br>
+            que ninguna distancia nos podrá separar jamás.<br>
+        </p>
 
-        <p class="poema">
-            Entre la distancia que separa los soles,<br>
-            y el eco del tiempo en mis rincones,<br>
-            nuestro amor es un puente de luz,<br>
-            que a pesar de los kilómetros, nos une, mi amor.<br>
-            <br>
-            Las flores amarillas florecen por ti,<br>
-            cada pétalo un paso más cerca de mí,<br>
-            porque nuestro amor fue tan grande y real,<br>
-            que ninguna distancia nos podrá separar jamás.<br>
-        </p>
+        <div class="subtitulos" id="subtitulos"></div>
+        <button class="boton-musica" onclick="reproducirMusica()">🎵 Toca aquí para la música 🎵</button>
+    </div>
 
-        <div class="subtitulos" id="subtitulos"></div>
-        <button class="boton-musica" onclick="reproducirMusica()">🎵 Toca aquí para la música 🎵</button>
-    </div>
+    <audio id="musicaFondo" loop>
+        <source src="lanadelrey.mp3" type="audio/mpeg">
+    </audio>
 
-    <audio id="musicaFondo" loop>
-        <source src="lanadelrey.mp3" type="audio/mpeg">
-    </audio>
-
-    <script src="flores.js"></script>
+    <script src="flores.js"></script>
 </body>
 </html>
