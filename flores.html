@@ -38,14 +38,6 @@
             color: #5d4037;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
-        .poema {
-            font-family: 'Merriweather', serif;
-            font-size: 1.2em;
-            color: #5d4037;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
         .poema-brillo {
             font-family: 'Playfair Display', serif;
             font-size: 1.4em;
@@ -87,22 +79,22 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80vw; /* 80% del ancho de la ventana */
-            height: 80vh; /* 80% de la altura de la ventana */
-            max-width: 600px; /* Tamaño máximo para que no sea muy grande */
+            width: 80vw;
+            height: 80vh;
+            max-width: 600px;
             max-height: 600px;
-            background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente */
+            background-color: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            overflow: hidden; /* Oculta partes de la imagen que se desborden */
-            display: none; /* Inicia oculto */
-            z-index: 9; /* Detrás del texto principal pero encima del fondo */
+            overflow: hidden;
+            display: none;
+            z-index: 9;
         }
         .recuadro-fotos img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Ajusta la imagen dentro del recuadro, mostrando toda la imagen */
+            object-fit: contain;
             position: absolute;
             opacity: 0;
             transition: opacity 1s ease-in-out;
@@ -110,8 +102,6 @@
         .recuadro-fotos img.activa {
             opacity: 1;
         }
-        
-        /* Animación para el cambio de color de fondo */
         @keyframes backgroundShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
