@@ -96,7 +96,7 @@ const fotos = [
     'ELENA4.jpg',
     'ELENA5.jpg',
     'ELENA6.jpg',
-    'ELENEA7.jpg'
+    'ELENA7.jpg'
 ];
 
 let mensajeIndex = 0;
@@ -148,4 +148,5 @@ function reproducirMusica() {
 
     setInterval(cambiarSubtitulos, 1000);
 }
+
 
