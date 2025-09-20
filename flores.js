@@ -1,127 +1,123 @@
-// Obtener el lienzo y su contexto de dibujo
-const canvas = document.getElementById('floresCanvas');
-const ctx = canvas.getContext('2d');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores Amarillas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(45deg, #f7e1b5, #d9b891, #a98d6c); /* Gradiente inicial */
+            background-size: 400% 400%;
+            animation: backgroundShift 20s ease infinite; /* Animación del fondo */
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .contenedor-principal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        .mensaje-fijo {
+            font-family: 'Playfair Display', serif; /* Nueva fuente elegante */
+            font-size: 3em;
+            color: #5d4037;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .subtitulos {
+            font-family: 'Merriweather', serif; /* Nueva fuente para los subtítulos */
+            font-size: 1.5em;
+            color: #5d4037;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+            margin-top: 10px;
+            min-height: 2em;
+        }
+        .boton-musica {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-family: 'Merriweather', serif;
+            background-color: #f0c242;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+        .boton-musica:hover {
+            background-color: #ffeb3b;
+        }
+        .recuadro-fotos {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw; /* 80% del ancho de la ventana */
+            height: 80vh; /* 80% de la altura de la ventana */
+            max-width: 600px; /* Tamaño máximo para que no sea muy grande */
+            max-height: 600px;
+            background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente */
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            overflow: hidden; /* Oculta partes de la imagen que se desborden */
+            display: none; /* Inicia oculto */
+            z-index: 9; /* Detrás del texto principal pero encima del fondo */
+        }
+        .recuadro-fotos img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ajusta la imagen dentro del recuadro, mostrando toda la imagen */
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .recuadro-fotos img.activa {
+            opacity: 1;
+        }
+        
+        /* Animación para el cambio de color de fondo */
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="floresCanvas"></canvas>
 
-// Ajustar el tamaño del canvas al de la ventana
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+    <div class="recuadro-fotos" id="recuadroFotos">
+        </div>
 
-// Arreglo para guardar todas las flores
-const flores = [];
+    <div class="contenedor-principal">
+        <div class="mensaje-fijo">
+            ¡Felicidades, Amor!
+            <br>
+            <small style="font-size: 0.5em;">Esto es para ti.</small>
+        </div>
+        <div class="subtitulos" id="subtitulos"></div>
+        <button class="boton-musica" onclick="reproducirMusica()">🎵 Toca aquí para la música 🎵</button>
+    </div>
 
-// Clase para crear una flor individual
-class Flor {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 10 + 5;
-        this.speedY = Math.random() * 1 + 0.5;
-        this.angle = Math.random() * 360;
-        this.speedAngle = Math.random() * 0.1 + 0.05;
-    }
+    <audio id="musicaFondo" loop>
+        <source src="lanadelrey.mp3" type="audio/mpeg">
+    </audio>
 
-    draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-
-        // Dibujar los pétalos
-        ctx.fillStyle = '#ffcc00';
-        for (let i = 0; i < 4; i++) {
-            ctx.beginPath();
-            ctx.arc(Math.cos(i * Math.PI / 2) * this.size, Math.sin(i * Math.PI / 2) * this.size, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        // Dibujar el centro
-        ctx.fillStyle = '#ff9900';
-        ctx.beginPath();
-        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.restore();
-    }
-
-    update() {
-        this.y += this.speedY;
-        this.angle += this.speedAngle;
-        
-        if (this.y > canvas.height) {
-            this.x = Math.random() * canvas.width;
-            this.y = -this.size;
-        }
-    }
-}
-
-// Lógica de la animación de las flores
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < flores.length; i++) {
-        flores[i].draw();
-        flores[i].update();
-    }
-    requestAnimationFrame(animate);
-}
-
-// --- Nuevas funciones para la sorpresa ---
-
-const musicaFondo = document.getElementById('musicaFondo');
-const subtitulosDiv = document.getElementById('subtitulos');
-const recuadroFotos = document.getElementById('recuadroFotos');
-
-const fotos = ["ELENA1.jpg", "ELENA2.jpg", "ELENA3.jpg", "ELENA4.jpg", "ELENA5.jpg", "ELENA6.jpg", "ELENA7.jpg"];
-let indiceFotoActual = 0;
-
-function cambiarFoto() {
-    recuadroFotos.innerHTML = '';
-    const nuevaFoto = document.createElement('img');
-    nuevaFoto.src = fotos[indiceFotoActual];
-    nuevaFoto.alt = "Foto de nosotros";
-    recuadroFotos.appendChild(nuevaFoto);
-    setTimeout(() => {
-        nuevaFoto.classList.add('activa');
-    }, 100);
-    indiceFotoActual = (indiceFotoActual + 1) % fotos.length;
-}
-
-const lineasCancion = [
-    { texto: "Me haces tan feliz...", tiempo: 0 },
-    { texto: "Cada día contigo es una aventura.", tiempo: 5 },
-    { texto: "Tú eres mi todo.", tiempo: 10 },
-    { texto: "Y siempre estaré aquí para ti.", tiempo: 15 },
-    { texto: "¡Te amo!", tiempo: 20 },
-    { texto: "Te amo, mucho incluso en los momentos que llegamos a pelear y nuestro árbol se tambalea pero quiero simplemente mostrarte que no eres espectadora y que este chico te ama.", tiempo: 25 },
-    { texto: "", tiempo: 35 }
-];
-let indiceLinea = 0;
-
-function mostrarSubtitulo() {
-    if (indiceLinea < lineasCancion.length) {
-        subtitulosDiv.textContent = lineasCancion[indiceLinea].texto;
-        const siguienteLinea = lineasCancion[indiceLinea + 1];
-        if (siguienteLinea) {
-            const duracion = siguienteLinea.tiempo - lineasCancion[indiceLinea].tiempo;
-            setTimeout(mostrarSubtitulo, duracion * 1000);
-        }
-        indiceLinea++;
-    }
-}
-
-function reproducirMusica() {
-    const boton = document.querySelector('.boton-musica');
-    boton.style.display = 'none';
-
-    recuadroFotos.style.display = 'block';
-
-    for (let i = 0; i < 100; i++) {
-        flores.push(new Flor());
-    }
-    animate();
-
-    cambiarFoto();
-    setInterval(cambiarFoto, 5000);
-
-    musicaFondo.play();
-    
-    mostrarSubtitulo();
-}
+    <script src="flores.js"></script>
+</body>
+</html>
