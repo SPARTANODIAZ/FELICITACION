@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores Amarillas</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f7e1b5; /* Un color de fondo suave */
+        }
+        canvas {
+            display: block;
+        }
+        .mensaje {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Fredoka One', cursive; /* Usa la misma fuente que tu otro proyecto */
+            font-size: 3em;
+            color: #d88c2f;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="floresCanvas"></canvas>
+    <div class="mensaje">
+        ¡Felicidades, Amor!
+        <br>
+        <small style="font-size: 0.5em;">Esto es para ti.</small>
+    </div>
+    <script src="flores.js"></script>
+</body>
+</html>

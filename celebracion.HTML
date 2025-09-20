@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Felicidades, Amor!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="hello-kitty-estilos.css">
+</head>
+<body>
+    <header class="invitacion-header">
+        <img src="encabezado.png" alt="Hello Kitty Decoración Izquierda" class="header-kitty-left">
+        <div class="header-content">
+            <img src="Sonrisa.png" alt="Hello Kitty celebrando" class="hello-kitty-img">
+            <h1>¡Felicidades, Amor!</h1>
+            <p>¡Tu esfuerzo ha dado frutos y Hello Kitty está feliz de celebrarlo contigo!</p>
+        </div>
+        <img src="encabezado2.png" alt="Hello Kitty Decoración Derecha" class="header-kitty-right">
+    </header>
+
+    <section class="abrir-invitacion" id="seccion-sorpresa" onclick="mostrarDetalles()">
+        <h2>🎉 Toca para descubrir tu sorpresa 🎉</h2>
+    </section>
+
+    <section class="detalles-invitacion" id="seccion-detalles" style="display:none;">
+        <h2>✨ ¡Lo Lograste! ✨</h2>
+        <p class="mensaje-invitacion">
+            Estoy muy orgulloso de ti por haber pasado todas tus materias. Tu dedicación y trabajo duro demuestran lo lejos que puedes llegar. ¡Te amo!
+        </p>
+        <div class="gif-emergente" id="gif-emergente">
+            <img src="O.GIF" alt="¡Felicidades!" class="gif-imagen">
+            <p id="gif-mensaje">¡Felicidades por tu gran logro!</p>
+        </div>
+
+        <div class="lista-deseos">
+            <h3>💖 ¿Alguna sorpresa para mí?</h3>
+            <form id="form-deseos">
+                <textarea id="texto-deseos" rows="4" placeholder="Escribe tu lista de deseos, amor..."></textarea>
+                <button type="submit" class="boton-kitty">🎁 Enviar Lista</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="invitacion-footer">
+        <p>¡Te adoro, mi amor!</p>
+        <p>Con mucho cariño, tu futuro esposo</p>
+    </footer>
+
+    <script src="hello-kitty-script.js"></script>
+</body>
+</html>
