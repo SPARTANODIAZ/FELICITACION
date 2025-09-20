@@ -1,0 +1,535 @@
+:root {
+    --kitty-blanco: #FFFFFF;
+    --kitty-rosa-pastel-fuerte: #FFC0CB; /* Rosa pastel fuerte para el fondo */
+    --kitty-rosa-oscuro: #E05A99; /* ¡Rosa Oscuro corregido, NO morado! */
+    --kitty-gris-oscuro: #333333;
+    --kitty-sombra: rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--kitty-rosa-pastel-fuerte); /* Fondo principal en rosa pastel fuerte */
+    color: var(--kitty-gris-oscuro);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('patron-kitty.png'); /* Asegúrate de que este patrón combine con los colores */
+    background-repeat: repeat;
+    background-size: 150px;
+}
+
+.invitacion-header {
+    background: none;
+    color: var(--kitty-blanco);
+    padding: 0;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 6px 12px var(--kitty-sombra);
+    position: relative;
+    overflow: hidden;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 20px;
+}
+
+.invitacion-header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5em;
+    margin: 10px 0;
+    color: var(--kitty-rosa-oscuro); /* Título en rosa oscuro */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.invitacion-header p {
+    font-size: 1.2em;
+    margin-top: 5px;
+    color: var(--kitty-gris-oscuro);
+}
+
+.header-content {
+    text-align: center;
+    flex-grow: 1;
+    background-color: var(--kitty-blanco); /* Fondo del título en blanco */
+    padding: 20px 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.hello-kitty-img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+}
+
+.header-kitty-left, .header-kitty-right {
+    height: 180px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: -10px;
+}
+
+.header-kitty-left {
+    margin-right: 15px;
+}
+
+.header-kitty-right {
+    margin-left: 15px;
+}
+
+/* Recuadro de "Abrir la Invitación Secreta" */
+.abrir-invitacion {
+    background: linear-gradient(135deg, var(--kitty-rosa-pastel-fuerte), var(--kitty-rosa-oscuro)); /* Degradado de rosa pastel fuerte a rosa oscuro */
+    color: var(--kitty-blanco);
+    padding: 60px 40px;
+    margin: 40px auto;
+    border-radius: 30px;
+    box-shadow: 0 10px 20px var(--kitty-sombra);
+    cursor: pointer;
+    text-align: center;
+    max-width: 600px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 5px dashed var(--kitty-blanco);
+    position: relative; /* Esencial para posicionar los moños dentro y fuera */
+    overflow: visible; /* ¡IMPORTANTE! Permite que los elementos sobresalgan */
+}
+
+.abrir-invitacion:hover {
+    transform: scale(1.03);
+    box-shadow: 0 15px 30px var(--kitty-sombra);
+}
+
+.abrir-invitacion h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2em;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Moños para "Abrir la Invitación Secreta" - MÁS GRANDES Y SOBRESALIENDO */
+.abrir-invitacion::before,
+.abrir-invitacion::after {
+    content: '';
+    position: absolute;
+    width: 90px; /* Tamaño del moño AUMENTADO */
+    height: 90px; /* Tamaño del moño AUMENTADO */
+    background-image: url('moño.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 10; /* Asegura que esté por encima del contenido */
+}
+
+.abrir-invitacion::before {
+    top: -40px; /* Hacia arriba, para que sobresalga más */
+    left: -40px; /* Hacia la izquierda, para que sobresalga más */
+    transform: rotate(-20deg); /* Opcional: un poco de rotación */
+}
+
+.abrir-invitacion::after {
+    bottom: -40px; /* Hacia abajo, para que sobresalga más */
+    right: -40px; /* Hacia la derecha, para que sobresalga más */
+    transform: rotate(20deg); /* Opcional: un poco de rotación en la dirección opuesta */
+}
+
+
+/* Recuadro de "Detalles de la Invitación" */
+.detalles-invitacion {
+    background-color: var(--kitty-blanco); /* Fondo de detalles en blanco */
+    margin: 20px auto;
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: 0 8px 16px var(--kitty-sombra);
+    max-width: 700px;
+    width: 90%;
+    text-align: center;
+    border: 4px solid var(--kitty-rosa-oscuro); /* Borde de detalles en rosa oscuro */
+    display: none;
+    position: relative; /* Esencial para posicionar los moños dentro y fuera */
+    overflow: visible; /* ¡IMPORTANTE! Permite que los elementos sobresalgan */
+}
+
+/* Moños para "Detalles de la Invitación" - MÁS GRANDES Y SOBRESALIENDO */
+.detalles-invitacion::before,
+.detalles-invitacion::after {
+    content: '';
+    position: absolute;
+    width: 90px; /* Tamaño del moño AUMENTADO */
+    height: 90px; /* Tamaño del moño AUMENTADO */
+    background-image: url('moño.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 10;
+}
+
+/* Moño superior izquierdo */
+.detalles-invitacion::before {
+    top: -40px;
+    left: -40px;
+    transform: rotate(-20deg);
+}
+
+/* Moño inferior derecho */
+.detalles-invitacion::after {
+    bottom: -40px;
+    right: -40px;
+    transform: rotate(20deg);
+}
+
+
+.abrir-invitacion h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2em;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Ajustes de tamaño de texto para mejor legibilidad */
+.detalles-invitacion h2 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--kitty-rosa-oscuro); /* Título de detalles en rosa oscuro */
+    font-size: 3em; /* Aumentado */
+    margin-bottom: 25px; /* Más margen inferior */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.detalles-invitacion h3 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--kitty-rosa-oscuro); /* Subtítulos en rosa oscuro */
+    font-size: 2em; /* Aumentado */
+    margin-top: 35px; /* Más margen superior */
+    margin-bottom: 20px; /* Más margen inferior */
+}
+
+.mensaje-invitacion {
+    font-size: 1.3em; /* Aumentado */
+    line-height: 1.7; /* Más espaciado entre líneas */
+    margin-bottom: 30px; /* Un poco más de margen inferior */
+}
+
+.info-evento p {
+    font-size: 1.3em; /* Aumentado */
+    margin: 12px 0; /* Aumentado para más espaciado */
+    line-height: 1.6; /* Añadido para mejor legibilidad */
+}
+
+.contador-tiempo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+    color: var(--kitty-rosa-oscuro); /* Contador en rosa oscuro */
+    margin: 20px 0;
+    background-color: var(--kitty-rosa-pastel-fuerte); /* Fondo del contador en rosa pastel fuerte */
+    padding: 10px 20px;
+    border-radius: 15px;
+    display: inline-block;
+    border: 2px dashed var(--kitty-rosa-oscuro); /* Borde del contador en rosa oscuro */
+}
+
+.boton-kitty {
+    display: inline-block;
+    background-color: var(--kitty-rosa-oscuro); /* Botones en rosa oscuro */
+    color: var(--kitty-blanco);
+    padding: 14px 28px;
+    margin: 15px 10px;
+    border-radius: 35px;
+    text-decoration: none;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 5px 10px var(--kitty-sombra);
+}
+
+.boton-kitty:hover {
+    background-color: #C34A83; /* Un poco más oscuro que el rosa oscuro al pasar el mouse */
+    transform: translateY(-3px);
+}
+
+.musica-fondo, .galeria-fotos, .interacciones-invitado {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 2px dashed var(--kitty-rosa-pastel-fuerte); /* Divisores en rosa pastel fuerte */
+}
+
+form {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px dashed var(--kitty-rosa-pastel-fuerte); /* Divisor de formulario en rosa pastel fuerte */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--kitty-rosa-oscuro); /* Labels de formulario en rosa oscuro */
+}
+
+input[type="text"], textarea {
+    width: calc(100% - 30px);
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 2px solid var(--kitty-rosa-pastel-fuerte); /* Bordes de inputs en rosa pastel fuerte */
+    border-radius: 12px;
+    font-size: 1em;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+.boton-confirmar {
+    margin-top: 20px;
+}
+
+.mensaje-exito {
+    color: green; /* Mantengo el verde para el mensaje de éxito por su claridad */
+    font-weight: bold;
+    margin-top: 15px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1em;
+}
+
+.icono-kitty-feliz {
+    width: 30px;
+    height: auto;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.imagenes-galeria {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.imagenes-galeria img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 4px solid var(--kitty-rosa-oscuro); /* Bordes de imágenes en la galería en rosa oscuro */
+    box-shadow: 0 5px 10px var(--kitty-sombra);
+    transition: transform 0.2s ease;
+}
+
+.imagenes-galeria img:hover {
+    transform: scale(1.05) rotate(3deg);
+}
+
+/* Fondos de mensajes/regalos - también con moños */
+#mensajes-recibidos div,
+#lista-regalos div {
+    background-color: var(--kitty-rosa-pastel-fuerte); /* Fondos de mensajes/regalos en rosa pastel fuerte */
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 15px;
+    text-align: left;
+    border: 1px solid var(--kitty-rosa-oscuro); /* Bordes de mensajes/regalos en rosa oscuro */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    position: relative; /* Esencial para los moños */
+    overflow: visible; /* ¡IMPORTANTE! Permite que los elementos sobresalgan */
+}
+
+/* Moños para mensajes/regalos - MÁS GRANDES Y SOBRESALIENDO */
+#mensajes-recibidos div::before,
+#lista-regalos div::before {
+    content: '';
+    position: absolute;
+    width: 50px; /* Moños más grandes para estos recuadros AUMENTADO */
+    height: 50px; /* Moños más grandes para estos recuadros AUMENTADO */
+    background-image: url('moño.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    top: -20px; /* Ajustada la posición */
+    left: -20px; /* Ajustada la posición */
+    transform: rotate(-15deg);
+    z-index: 1; /* Para que esté por debajo del texto, o 1 si quieres que lo cubra un poco */
+}
+
+
+.invitacion-footer {
+    background-color: var(--kitty-rosa-oscuro); /* Footer en rosa oscuro */
+    color: var(--kitty-blanco);
+    width: 100%;
+    padding: 25px 0;
+    text-align: center;
+    margin-top: 40px;
+    box-shadow: 0 -6px 12px var(--kitty-sombra);
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+
+.invitacion-footer p {
+    margin: 5px 0;
+    font-size: 1.1em;
+}
+
+/* Estilos para el GIF emergente */
+.gif-overlay {
+    position: fixed; /* Para que cubra toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente blanco */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    opacity: 0; /* Por defecto está invisible */
+    visibility: hidden; /* Por defecto no es accesible */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transición suave */
+}
+
+.gif-overlay.active {
+    opacity: 1; /* Se vuelve visible */
+    visibility: visible; /* Se vuelve accesible */
+}
+
+.gif-imagen {
+    max-width: 80%; /* Ajusta el tamaño del GIF */
+    max-height: 80%;
+    border-radius: 20px; /* Opcional: bordes redondeados para el GIF */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Sombra para que destaque */
+}
+
+.gif-overlay p {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8em;
+    color: var(--kitty-rosa-oscuro); /* Color del texto a juego con tu paleta */
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Media Queries para el GIF */
+@media (max-width: 600px) {
+    .gif-imagen {
+        max-width: 90%;
+        max-height: 90%;
+    }
+    .gif-overlay p {
+        font-size: 1.4em;
+    }
+}
+
+/* Media Queries para el resto de elementos (mantener al final) */
+@media (max-width: 768px) {
+    .invitacion-header h1 {
+        font-size: 2.5em;
+    }
+    .abrir-invitacion h2 {
+        font-size: 1.8em;
+    }
+    .detalles-invitacion h2 { /* Ajuste en móviles */
+        font-size: 2.5em;
+    }
+    .detalles-invitacion h3 { /* Ajuste en móviles */
+        font-size: 1.8em;
+    }
+    .mensaje-invitacion { /* Ajuste en móviles */
+        font-size: 1.1em;
+    }
+    .info-evento p { /* Ajuste en móviles */
+        font-size: 1.1em;
+        margin: 10px 0;
+    }
+    .boton-kitty {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .imagenes-galeria img {
+        width: 120px;
+        height: 120px;
+    }
+    .header-kitty-left, .header-kitty-right {
+        height: 120px;
+    }
+    .header-content h1 {
+        font-size: 2.5em;
+    }
+    .header-content .hello-kitty-img {
+        width: 100px;
+    }
+    .header-kitty-left {
+        margin-right: 5px;
+    }
+    .header-kitty-right {
+        margin-left: 5px;
+    }
+    .invitacion-header {
+        padding-bottom: 10px;
+    }
+    /* Ajuste de moños para móviles (manteniendo la proporción de los tamaños grandes) */
+    .abrir-invitacion::before,
+    .abrir-invitacion::after,
+    .detalles-invitacion::before,
+    .detalles-invitacion::after {
+        width: 70px; /* Moños más pequeños para móviles, pero aún más grandes que antes */
+        height: 70px;
+        top: -30px; /* Ajusta la posición */
+        left: -30px; /* Ajusta la posición */
+        right: -30px; /* Ajusta la posición */
+        bottom: -30px; /* Ajusta la posición */
+    }
+    #mensajes-recibidos div::before,
+    #lista-regalos div::before {
+        width: 40px; /* Moños de mensajes/regalos en móviles */
+        height: 40px;
+        top: -15px;
+        left: -15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .invitacion-header h1 {
+        font-size: 2em;
+    }
+    .hello-kitty-img {
+        width: 80px;
+    }
+    .abrir-invitacion {
+        padding: 40px 20px;
+    }
+    .abrir-invitacion h2 {
+        font-size: 1.5em;
+    }
+    .detalles-invitacion {
+        padding: 20px;
+    }
+    .info-evento p { /* Ajuste final para móviles muy pequeños */
+        font-size: 1em;
+    }
+    input[type="text"], textarea {
+        width: calc(100% - 20px);
+    }
+    .header-kitty-left, .header-kitty-right {
+        display: none;
+    }
+    .invitacion-header {
+        padding: 10px 15px;
+    }
+    .header-content {
+        margin-top: 0;
+    }
+    .header-content h1 {
+        font-size: 2em;
+    }
+    .header-content .hello-kitty-img {
+        width: 80px;
+    }
+    /* Los moños de los recuadros grandes ya se ajustan en la media query de 768px */
+    /* Los moños de los mensajes/regalos también se ajustan allí */
+}
