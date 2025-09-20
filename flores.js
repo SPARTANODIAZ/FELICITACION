@@ -11,117 +11,140 @@ const flores = [];
 
 // Clase para crear una flor individual
 class Flor {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 10 + 5;
-        this.speedY = Math.random() * 1 + 0.5;
-        this.angle = Math.random() * 360;
-        this.speedAngle = Math.random() * 0.1 + 0.05;
-    }
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 10 + 5;
+        this.speedY = Math.random() * 1 + 0.5;
+        this.angle = Math.random() * 360;
+        this.speedAngle = Math.random() * 0.1 + 0.05;
+    }
 
-    draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
+    draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
 
-        // Dibujar los pétalos
-        ctx.fillStyle = '#ffcc00';
-        for (let i = 0; i < 4; i++) {
-            ctx.beginPath();
-            ctx.arc(Math.cos(i * Math.PI / 2) * this.size, Math.sin(i * Math.PI / 2) * this.size, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
+        ctx.fillStyle = '#ffcc00';
+        for (let i = 0; i < 4; i++) {
+            ctx.beginPath();
+            ctx.arc(Math.cos(i * Math.PI / 2) * this.size, Math.sin(i * Math.PI / 2) * this.size, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
-        // Dibujar el centro
-        ctx.fillStyle = '#ff9900';
-        ctx.beginPath();
-        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = '#ff9900';
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+        ctx.fill();
 
-        ctx.restore();
-    }
+        ctx.restore();
+    }
 
-    update() {
-        this.y += this.speedY;
-        this.angle += this.speedAngle;
-        
-        if (this.y > canvas.height) {
-            this.x = Math.random() * canvas.width;
-            this.y = -this.size;
-        }
-    }
+    update() {
+        this.y += this.speedY;
+        this.angle += this.speedAngle;
+        
+        if (this.y > canvas.height) {
+            this.x = Math.random() * canvas.width;
+            this.y = -this.size;
+        }
+    }
 }
 
 // Lógica de la animación de las flores
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < flores.length; i++) {
-        flores[i].draw();
-        flores[i].update();
-    }
-    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < flores.length; i++) {
+        flores[i].draw();
+        flores[i].update();
+    }
+    if (flores.length < 50) {
+        flores.push(new Flor());
+    }
+    requestAnimationFrame(animate);
 }
 
-// --- Nuevas funciones para la sorpresa ---
+// Generar flores iniciales y comenzar la animación
+window.addEventListener('load', () => {
+    for (let i = 0; i < 50; i++) {
+        flores.push(new Flor());
+    }
+    animate();
+});
 
-const musicaFondo = document.getElementById('musicaFondo');
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+// Arreglo de mensajes y su tiempo de aparición
+const mensajes = [
+    { tiempo: 1, texto: "Solo quería que supieras" },
+    { tiempo: 5, texto: "Desde que te conocí..." },
+    { tiempo: 10, texto: "Mi vida se llenó de color..." },
+    { tiempo: 15, texto: "Y cada día contigo..." },
+    { tiempo: 20, texto: "Es una bendición." },
+    { tiempo: 25, texto: "Te amo, mi amor." },
+    { tiempo: 30, texto: "Te amo, mucho incluso en los momentos que llegamos a pelear y nuestro arbol se tambalea pero quiero simplemente mostrarte que no eres espectadora y que este chico te ama." }
+];
+
+// Arreglo de tus fotos (REEMPLAZA ESTO CON TUS ARCHIVOS)
+const fotos = [
+    'ELENA1.jpg',
+    'ELENA2.jpg',
+    'ELENA3.jpg',
+    'ELENA4.jpg',
+    'ELENA5.jpg',
+    'ELENA6.jpg',
+    'ELENA7.jpg'
+];
+
+let mensajeIndex = 0;
+let fotoIndex = 0;
 const subtitulosDiv = document.getElementById('subtitulos');
-const recuadroFotos = document.getElementById('recuadroFotos');
+const recuadroFotos = document.getElementById('recuadroFotos'); // NUEVA REFERENCIA
 
-const fotos = ["ELENA1.jpg", "ELENA2.jpg", "ELENA3.jpg", "ELENA4.jpg", "ELENA5.jpg", "ELENA6.jpg", "ELENA7.jpg"];
-let indiceFotoActual = 0;
+function cambiarSubtitulos() {
+    const musica = document.getElementById('musicaFondo');
+    
+    if (mensajeIndex < mensajes.length && musica.currentTime >= mensajes[mensajeIndex].tiempo) {
+        subtitulosDiv.textContent = mensajes[mensajeIndex].texto;
+        mensajeIndex++;
+    } else if (mensajeIndex >= mensajes.length) {
+        subtitulosDiv.textContent = "";
+    }
+}
 
 function cambiarFoto() {
-    recuadroFotos.innerHTML = '';
-    const nuevaFoto = document.createElement('img');
-    nuevaFoto.src = fotos[indiceFotoActual];
-    nuevaFoto.alt = "Foto de nosotros";
-    recuadroFotos.appendChild(nuevaFoto);
-    setTimeout(() => {
-        nuevaFoto.classList.add('activa');
-    }, 100);
-    indiceFotoActual = (indiceFotoActual + 1) % fotos.length;
+    if (fotoIndex >= fotos.length) {
+        fotoIndex = 0;
+    }
+
+    // Remueve la clase "activa" de la foto actual para ocultarla
+    const fotosActivas = document.querySelectorAll('.recuadro-fotos img.activa');
+    if (fotosActivas.length > 0) {
+        fotosActivas[0].classList.remove('activa');
+    }
+
+    // Crea una nueva imagen y la agrega al contenedor
+    const nuevaFoto = new Image();
+    nuevaFoto.src = fotos[fotoIndex];
+    nuevaFoto.classList.add('activa');
+    recuadroFotos.appendChild(nuevaFoto);
+
+    fotoIndex++;
 }
 
-const lineasCancion = [
-    { texto: "Me haces tan feliz...", tiempo: 0 },
-    { texto: "Cada día contigo es una aventura.", tiempo: 5 },
-    { texto: "Tú eres mi todo.", tiempo: 10 },
-    { texto: "Y siempre estaré aquí para ti.", tiempo: 15 },
-    { texto: "¡Te amo!", tiempo: 20 },
-    { texto: "Te amo, mucho incluso en los momentos que llegamos a pelear y nuestro árbol se tambalea pero quiero simplemente mostrarte que no eres espectadora y que este chico te ama.", tiempo: 25 },
-    { texto: "", tiempo: 35 }
-];
-let indiceLinea = 0;
-
-function mostrarSubtitulo() {
-    if (indiceLinea < lineasCancion.length) {
-        subtitulosDiv.textContent = lineasCancion[indiceLinea].texto;
-        const siguienteLinea = lineasCancion[indiceLinea + 1];
-        if (siguienteLinea) {
-            const duracion = siguienteLinea.tiempo - lineasCancion[indiceLinea].tiempo;
-            setTimeout(mostrarSubtitulo, duracion * 1000);
-        }
-        indiceLinea++;
-    }
-}
-
+// Función para reproducir la música y empezar las animaciones
 function reproducirMusica() {
-    const boton = document.querySelector('.boton-musica');
-    boton.style.display = 'none';
+    const musica = document.getElementById('musicaFondo');
+    musica.play();
+    
+    document.querySelector('.boton-musica').style.display = 'none';
+    recuadroFotos.style.display = 'block'; // Muestra el recuadro de fotos
+    
+    cambiarFoto();
+    setInterval(cambiarFoto, 5000);
 
-    recuadroFotos.style.display = 'block';
-
-    for (let i = 0; i < 100; i++) {
-        flores.push(new Flor());
-    }
-    animate();
-
-    cambiarFoto();
-    setInterval(cambiarFoto, 5000);
-
-    musicaFondo.play();
-    
-    mostrarSubtitulo();
+    setInterval(cambiarSubtitulos, 1000);
 }
