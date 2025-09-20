@@ -32,121 +32,120 @@ class Flor {
             ctx.fill();
         }
 
-        ctx.fillStyle = '#ff9900';
-        ctx.beginPath();
-        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-        ctx.fill();
-
         ctx.restore();
     }
 
     update() {
+        // Mover la flor hacia abajo
         this.y += this.speedY;
+
+        // Girar la flor
         this.angle += this.speedAngle;
-        
+
+        // Si la flor sale de la pantalla, la reseteamos arriba
         if (this.y > canvas.height) {
-            this.x = Math.random() * canvas.width;
             this.y = -this.size;
+            this.x = Math.random() * canvas.width;
         }
     }
 }
 
-// Lógica de la animación de las flores
+// Función para inicializar las flores
+function initFlores() {
+    for (let i = 0; i < 100; i++) {
+        flores.push(new Flor());
+    }
+}
+
+// Función para animar las flores
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < flores.length; i++) {
-        flores[i].draw();
         flores[i].update();
-    }
-    if (flores.length < 50) {
-        flores.push(new Flor());
+        flores[i].draw();
     }
     requestAnimationFrame(animate);
 }
 
-// Generar flores iniciales y comenzar la animación
-window.addEventListener('load', () => {
-    for (let i = 0; i < 50; i++) {
-        flores.push(new Flor());
-    }
-    animate();
-});
+// --- Nuevas funciones para la sorpresa ---
 
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
+const musicaFondo = document.getElementById('musicaFondo');
+const subtitulos = document.getElementById('subtitulos');
+const recuadroFotos = document.getElementById('recuadroFotos');
 
-// Arreglo de mensajes y su tiempo de aparición
-const mensajes = [
-    { tiempo: 1, texto: "Solo quería que supieras" },
-    { tiempo: 5, texto: "Desde que te conocí..." },
-    { tiempo: 10, texto: "Mi vida se llenó de color..." },
-    { tiempo: 15, texto: "Y cada día contigo..." },
-    { tiempo: 20, texto: "Es una bendición." },
-    { tiempo: 25, texto: "Te amo, mi amor." },
-    { tiempo: 30, texto: "Te amo, mucho incluso en los momentos que llegamos a pelear y nuestro arbol se tambalea pero quiero simplemente mostrarte que no eres espectadora y que este chico te ama." }
-];
+// Lista de tus fotos (asegúrate de que los nombres de archivo sean EXACTOS)
+const fotos = ["ELENA1.jpg", "ELENA2.jpg", "ELENA3.jpg", "ELENA4.jpg", "ELENA5.jpg"];
+let indiceFotoActual = 0;
 
-// Arreglo de tus fotos (REEMPLAZA ESTO CON TUS ARCHIVOS)
-const fotos = [
-    'ELENA1.jpg',
-    'ELENA2.jpg',
-    'ELENA3.jpg',
-    'ELENA4.jpg',
-    'ELENA5.jpg',
-    'ELENA6.jpg',
-    'ELENA7.jpg'
-];
+function mostrarSiguienteFoto() {
+    // Eliminar la clase 'activa' de la foto anterior
+    const fotosAntiguas = recuadroFotos.querySelectorAll('img');
+    fotosAntiguas.forEach(img => img.classList.remove('activa'));
 
-let mensajeIndex = 0;
-let fotoIndex = 0;
-const subtitulosDiv = document.getElementById('subtitulos');
-const recuadroFotos = document.getElementById('recuadroFotos'); // NUEVA REFERENCIA
+    // Crear un nuevo elemento de imagen
+    const nuevaFoto = document.createElement('img');
+    nuevaFoto.src = fotos[indiceFotoActual];
+    nuevaFoto.alt = "Foto de nosotros";
 
-function cambiarSubtitulos() {
-    const musica = document.getElementById('musicaFondo');
-    
-    if (mensajeIndex < mensajes.length && musica.currentTime >= mensajes[mensajeIndex].tiempo) {
-        subtitulosDiv.textContent = mensajes[mensajeIndex].texto;
-        mensajeIndex++;
-    } else if (mensajeIndex >= mensajes.length) {
-        subtitulosDiv.textContent = "";
-    }
-}
-
-function cambiarFoto() {
-    if (fotoIndex >= fotos.length) {
-        fotoIndex = 0;
-    }
-
-    // Remueve la clase "activa" de la foto actual para ocultarla
-    const fotosActivas = document.querySelectorAll('.recuadro-fotos img.activa');
-    if (fotosActivas.length > 0) {
-        fotosActivas[0].classList.remove('activa');
-    }
-
-    // Crea una nueva imagen y la agrega al contenedor
-    const nuevaFoto = new Image();
-    nuevaFoto.src = fotos[fotoIndex];
-    nuevaFoto.classList.add('activa');
+    // Agregar la nueva foto al recuadro
     recuadroFotos.appendChild(nuevaFoto);
 
-    fotoIndex++;
+    // Activar la nueva foto después de un breve retraso para la transición
+    setTimeout(() => {
+        nuevaFoto.classList.add('activa');
+    }, 100);
+
+    // Moverse a la siguiente foto
+    indiceFotoActual = (indiceFotoActual + 1) % fotos.length;
 }
 
-// Función para reproducir la música y empezar las animaciones
+// Subtítulos sincronizados
+const lineasCancion = [
+    { texto: "Me haces tan feliz...", tiempo: 0 },
+    { texto: "Cada día contigo es una aventura.", tiempo: 5 },
+    { texto: "Tú eres mi todo.", tiempo: 10 },
+    { texto: "Y siempre estaré aquí para ti.", tiempo: 15 },
+    { texto: "¡Te amo!", tiempo: 20 },
+    { texto: "", tiempo: 25 } // Final de los subtítulos
+];
+let indiceLinea = 0;
+
+function mostrarSubtitulo() {
+    if (indiceLinea < lineasCancion.length) {
+        subtitulos.textContent = lineasCancion[indiceLinea].texto;
+        const siguienteLinea = lineasCancion[indiceLinea + 1];
+        if (siguienteLinea) {
+            const duracion = siguienteLinea.tiempo - lineasCancion[indiceLinea].tiempo;
+            setTimeout(mostrarSubtitulo, duracion * 1000);
+        }
+        indiceLinea++;
+    }
+}
+
+// Función principal para reproducir la música y empezar la magia
 function reproducirMusica() {
-    const musica = document.getElementById('musicaFondo');
-    musica.play();
-    
-    document.querySelector('.boton-musica').style.display = 'none';
-    recuadroFotos.style.display = 'block'; // Muestra el recuadro de fotos
-    
-    cambiarFoto();
-    setInterval(cambiarFoto, 5000);
+    // Ocultar el botón
+    const boton = document.querySelector('.boton-musica');
+    boton.style.display = 'none';
 
-    setInterval(cambiarSubtitulos, 1000);
+    // Hacer visible el recuadro de las fotos
+    recuadroFotos.style.display = 'block';
+
+    // Iniciar el efecto de las flores
+    initFlores();
+    animate();
+
+    // Empezar a mostrar la primera foto
+    mostrarSiguienteFoto();
+    // Y cambiarla cada 5 segundos
+    setInterval(mostrarSiguienteFoto, 5000);
+
+    // Iniciar la música
+    musicaFondo.play();
+
+    // Iniciar los subtítulos
+    mostrarSubtitulo();
 }
+
 
 
